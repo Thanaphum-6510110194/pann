@@ -42,6 +42,11 @@ function Login() {
     if (auth.isAuthenticated) {
         if (userInfo.ready) {
             const backTo = location.state?.bactTo || '/home'
+            if(action.isStaff()){
+                return (
+                    <Navigate to='/announcement' replace />
+                )
+            }
             return (
                 <Navigate to={backTo} replace />
             )
