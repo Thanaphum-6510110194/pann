@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardHeader,Grid, IconButton, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, Dialog, DialogTitle,Grid, IconButton, Tabs, Tab, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import {Delete, Edit} from "@mui/icons-material";
+import {Delete, Edit, Close} from "@mui/icons-material";
 import Announcement from "../models/Announcement";
 import Repo from '../repositories'
+import AnnouncementForm from "./announcement-form";
 
 interface Prop {
     announcement: Announcement
@@ -13,6 +14,15 @@ interface Prop {
 function AnnouncementCard(props: Prop) {
     const [announcement, setAnnouncement] = useState<Announcement>(props.announcement)
     const [popup, setPopup] = useState(false)
+    const [tabIndex, setTabIndex] = useState(0)
+
+    const onUpdate = async (ann: Partial<Announcement>) => {
+        const result = await Repo.announcements.update(ann)
+        if (result) {
+            setAnnouncement(result)
+        }
+        setPopup(false)
+    }
 
     const onDelete = async () => {
         await Repo.announcements.delete(announcement.id)
@@ -47,6 +57,19 @@ function AnnouncementCard(props: Prop) {
                     </CardActions>
                 </CardActionArea>
             </Card>
+            <Dialog PaperProps={{sx: { minWidth: '50%', height: '55$'} }} open={popup} onClose={() => setPopup(false)}>
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between'}}>
+                    <Tabs value={tabIndex} onChange={(event: React.SyntheticEvent, newValue: number) => setTabIndex(newValue)} aria-label="basic tabs example">
+                        <Tab label="General" />
+                    </Tabs>
+                    <IconButton onClick={() => setPopup(false)}>
+                        <Close/>
+                    </IconButton>
+                </DialogTitle>
+                <Box hidden={tabIndex !== 0}>
+                    <AnnouncementForm announcement={announcement} callbackFn={onUpdate}></AnnouncementForm>
+                </Box>
+            </Dialog>
         </Box>
     )
 }
