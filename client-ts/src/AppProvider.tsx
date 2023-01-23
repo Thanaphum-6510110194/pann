@@ -58,6 +58,7 @@ function AppProvider({children}: AppProviderProps){
         _setUserInfo({...userInfo, ready: true,staff:isStaff()})
         sessionStorage.setItem('userInfo',JSON.stringify(_userInfo))
 
+
     }
     
     function isStaff(){

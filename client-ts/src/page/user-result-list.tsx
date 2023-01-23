@@ -58,7 +58,7 @@ function UserResultList() {
                 </MenuItem>
                 <MenuItem value={1}>Pinned</MenuItem>
             </Select>
-            <TextField sx={{ m:2, minWidth: 120 }} label="Search" variant='outlined' value={searchFilter} onChange={handleChangeSearchFilter} />
+            <TextField sx={{ m: 2, minWidth: 120 }} label="Search" placeholder="Topic, Description" variant="outlined" value={searchFilter} onChange={handleChangeSearchFilter} />
             {userResultList.length
               ?
               <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 8, md: 12, lg: 12, xl: 10}}>

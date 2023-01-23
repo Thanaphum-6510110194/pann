@@ -28,6 +28,7 @@ const ProtectedRoute = ({staffOnly, children}: Props) => {
     useEffect(() => {
         const json = sessionStorage.getItem('userInfo') as string
         const data = JSON.parse(json)
+
         if (!userInfo.ready || (staffOnly && !action.isStaff())) {
             if(data.ready){
                 if(staffOnly && !data.staff){

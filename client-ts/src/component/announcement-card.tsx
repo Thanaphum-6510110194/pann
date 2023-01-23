@@ -32,6 +32,7 @@ function AnnouncementCard(props: Prop) {
 
     const fetchUserResultList = async (announcementId: number) => {
         const result = await Repo.announcements.getUserResult(announcementId)
+
         if (result) {
             setUserResultList([])
             setUserResultList(result)
